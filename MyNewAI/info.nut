@@ -93,7 +93,7 @@ class MyNewAI extends AIInfo
     name = "maxvehicles",
     description = "The maximum amount of vehicles in one route",
     min_value = 1,
-    max_value = 5, 
+    max_value = 10, 
     easy_value = 1,
     medium_value = 3,
     hard_value = 5,

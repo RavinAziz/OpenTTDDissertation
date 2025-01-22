@@ -522,7 +522,7 @@ function MyNewAI::RegisterRoute()
     route.group = group;
     route.crg = crg;
     route.vehtype = vehtype;
-    route.maxvehicles = AIController.GetSetting("max_roadvehs");
+    route.maxvehicles = AIController.GetSetting("maxvehicles");
 
     routes.push(route);
     groups.AddItem(group, routes.len() - 1);
