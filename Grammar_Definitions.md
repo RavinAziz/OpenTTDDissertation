@@ -1,33 +1,41 @@
 // Backus-Naur Form grammar for grammatical evolution in OpenTTD
 // heavily referenced from Frank Bijlsma's thesis paper
 
+
+<script>:= <build>+ (<rule>)*
+
 <rule>:= <money>|<bus>
 
-<equals>:= =|!=|<|>|<=|>=
+<op>:= =|!=|<|>|<=|>=
 
 // we should normalize the value (especially for financial related matters) because the funds will scale at later 
 // stages of the game making it difficult for the conditions to hold consistently 
+// (point made by Frank Bijlsma)
 
-<digits>:= 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1.0
+<num>:= 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1.0
 
+<boolean>:=
 
+<maintain>:= <upgrade_bus>|<remove_unprofitable>|<add_bus>
 
-<maintain>:= <upgrade_vehicle>|<remove_unprofitable>
-
-<upgrade_vehicle>:= UpgradeVehicles()
+<upgrade_bus>:= UpgradeBus()
 <remove_unprofitable>:= RemoveUnprofitable()
+<add_bus>:= AddBus()
 
-<build>:= 
+
+// is this bad practice?
+<build>:= BuildRoute(<num>)
+
 
 <fin_var> := balance_left | profit_loan_ratio | current_funds_loan_ratio | debt_taken
 
-<money>:= if (<fin_var> <equals> <num>) <debt>
-
 <debt> := debt(<boolean>, <num>)
 
-<route_var> = waiting | profit | last_build | last_paid_loan | oldest_vehicle_age
+<money>:= if (<fin_var> <op> <num>) <debt>
 
+<route_var> := waiting | profit | last_build | last_paid_loan | youngest_vehicle_age
 
+<bus> := if (<route_var> <op> <num>) <maintain>
 
 
 ------------------------------------------------------------------------------------------------------------------------
